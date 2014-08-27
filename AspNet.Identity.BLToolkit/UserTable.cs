@@ -186,26 +186,24 @@ namespace AspNet.Identity.BLToolkit
         /// <returns></returns>
         public int Insert(TUser user)
         {
-            int _id;
-            _id = db
-                   .SetCommand(@"
+            var _id = db
+                    .SetCommand(@"
                             Insert into AspNetUsers
                                 (UserName,  PasswordHash, SecurityStamp,Email,EmailConfirmed,PhoneNumber,PhoneNumberConfirmed, AccessFailedCount,LockoutEnabled,LockoutEndDateUtc,TwoFactorEnabled)
                             values (@name, @pwdHash, @SecStamp,@email,@emailconfirmed,@phonenumber,@phonenumberconfirmed,@accesscount,@lockoutenabled,@lockoutenddate,@twofactorenabled)
                             SELECT Cast(SCOPE_IDENTITY() as int)",
-           db.Parameter("@name", user.UserName),
-                //  db.Parameter("@id", user.Id),
-           db.Parameter("@pwdHash", user.PasswordHash),
-           db.Parameter("@SecStamp", user.SecurityStamp),
-           db.Parameter("@email", user.Email),
-           db.Parameter("@emailconfirmed", user.EmailConfirmed),
-           db.Parameter("@phonenumber", user.PhoneNumber),
-           db.Parameter("@phonenumberconfirmed", user.PhoneNumberConfirmed),
-           db.Parameter("@accesscount", user.AccessFailedCount),
-           db.Parameter("@lockoutenabled", user.LockoutEnabled),
-           db.Parameter("@lockoutenddate", user.LockoutEndDateUtc),
-           db.Parameter("@twofactorenabled", user.TwoFactorEnabled))
-           .ExecuteScalar<int>();
+            db.Parameter("@name", user.UserName),
+            db.Parameter("@pwdHash", user.PasswordHash),
+            db.Parameter("@SecStamp", user.SecurityStamp),
+            db.Parameter("@email", user.Email),
+            db.Parameter("@emailconfirmed", user.EmailConfirmed),
+            db.Parameter("@phonenumber", user.PhoneNumber),
+            db.Parameter("@phonenumberconfirmed", user.PhoneNumberConfirmed),
+            db.Parameter("@accesscount", user.AccessFailedCount),
+            db.Parameter("@lockoutenabled", user.LockoutEnabled),
+            db.Parameter("@lockoutenddate", user.LockoutEndDateUtc),
+            db.Parameter("@twofactorenabled", user.TwoFactorEnabled))
+            .ExecuteScalar<int>();
 
             user.Id = _id; // set userid
             return _id;
