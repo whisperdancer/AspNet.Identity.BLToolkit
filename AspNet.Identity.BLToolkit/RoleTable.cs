@@ -26,14 +26,12 @@ namespace AspNet.Identity.BLToolkit
         /// </summary>
         /// <param name="roleId">The role Id</param>
         /// <returns></returns>
-        public int Delete(int roleId)
+        public void Delete(int roleId)
         {
             db
                 .SetCommand(@"Delete from AspNetRoles where Id = @id",
                     db.Parameter("@id", roleId))
                 .ExecuteNonQuery();
-
-            return roleId;
         }
 
         /// <summary>
@@ -41,15 +39,13 @@ namespace AspNet.Identity.BLToolkit
         /// </summary>
         /// <param name="roleName">The role's name</param>
         /// <returns></returns>
-        public int Insert(IdentityRole role)
+        public void Insert(IdentityRole role)
         {
-            var id = db
+            db
                 .SetCommand(@"Insert into AspNetRoles (Name) values (@name)
                     SELECT Cast(SCOPE_IDENTITY() as int)",
                     db.Parameter("@name", role.Name))
-                .ExecuteScalar<int>();
-
-            return id;
+                .ExecuteNonQuery();
         }
 
         /// <summary>
@@ -118,7 +114,7 @@ namespace AspNet.Identity.BLToolkit
             return role;
         }
 
-        public int Update(IdentityRole role)
+        public void Update(IdentityRole role)
         {
             db
              .SetCommand(@"
@@ -131,8 +127,6 @@ namespace AspNet.Identity.BLToolkit
                  db.Parameter("@name", role.Name),
                  db.Parameter("@Id", role.Id))
              .ExecuteNonQuery();
-
-            return role.Id;
         }
     }
 }

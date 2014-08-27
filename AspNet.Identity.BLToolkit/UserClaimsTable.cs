@@ -51,14 +51,12 @@ namespace AspNet.Identity.BLToolkit
         /// </summary>
         /// <param name="userId">The user's id</param>
         /// <returns></returns>
-        public int Delete(int userId)
+        public void Delete(int userId)
         {
             db
                 .SetCommand(@"Delete from AspNetUserClaims where UserId = @userId",
                     db.Parameter("@userId", userId))
                 .ExecuteNonQuery();
-
-            return userId;
         }
 
         /// <summary>
@@ -67,7 +65,7 @@ namespace AspNet.Identity.BLToolkit
         /// <param name="userClaim">User's claim to be added</param>
         /// <param name="userId">User's id</param>
         /// <returns></returns>
-        public int Insert(Claim userClaim, int userId)
+        public void Insert(Claim userClaim, int userId)
         {
             db
                 .SetCommand(@"Insert into AspNetUserClaims (ClaimValue, ClaimType, UserId) values (@value, @type, @userId)",
@@ -75,8 +73,6 @@ namespace AspNet.Identity.BLToolkit
                     db.Parameter("@type", userClaim.Type),
                     db.Parameter("@userId", userId))
                 .ExecuteNonQuery();
-
-            return userId;
         }
 
         /// <summary>
@@ -85,7 +81,7 @@ namespace AspNet.Identity.BLToolkit
         /// <param name="user">The user to have a claim deleted</param>
         /// <param name="claim">A claim to be deleted from user</param>
         /// <returns></returns>
-        public int Delete(IdentityUser user, Claim claim)
+        public void Delete(IdentityUser user, Claim claim)
         {
             db
                 .SetCommand(@"Delete from AspNetUserClaims where UserId = @userId and @ClaimValue = @value and ClaimType = @type",
@@ -93,8 +89,6 @@ namespace AspNet.Identity.BLToolkit
                     db.Parameter("@value", claim.Value),
                     db.Parameter("@type", claim.Type))
                 .ExecuteNonQuery();
-
-            return user.Id;
         }
     }
 }

@@ -27,7 +27,7 @@ namespace AspNet.Identity.BLToolkit
         /// <param name="user">User to have login deleted</param>
         /// <param name="login">Login to be deleted from user</param>
         /// <returns></returns>
-        public int Delete(IdentityUser user, UserLoginInfo login)
+        public void Delete(IdentityUser user, UserLoginInfo login)
         {
             db
                 .SetCommand(@"Delete from AspNetUserLogins where UserId = @userId and LoginProvider = @loginProvider and ProviderKey = @providerKey",
@@ -35,8 +35,6 @@ namespace AspNet.Identity.BLToolkit
                 db.Parameter("@loginProvider", login.LoginProvider),
                 db.Parameter("@providerKey", login.ProviderKey))
                 .ExecuteNonQuery();
-
-            return user.Id;
         }
 
         /// <summary>
@@ -44,14 +42,12 @@ namespace AspNet.Identity.BLToolkit
         /// </summary>
         /// <param name="userId">The user's id</param>
         /// <returns></returns>
-        public int Delete(int userId)
+        public void Delete(int userId)
         {
             db
                 .SetCommand(@"Delete from AspNetUserLogins where UserId = @userId",
                     db.Parameter("@userId", userId))
                 .ExecuteNonQuery();
-
-            return userId;
         }
 
         /// <summary>
@@ -60,7 +56,7 @@ namespace AspNet.Identity.BLToolkit
         /// <param name="user">User to have new login added</param>
         /// <param name="login">Login to be added</param>
         /// <returns></returns>
-        public int Insert(IdentityUser user, UserLoginInfo login)
+        public void Insert(IdentityUser user, UserLoginInfo login)
         {
             db
                 .SetCommand(@"Insert into AspNetUserLogins (LoginProvider, ProviderKey, UserId) values (@loginProvider, @providerKey, @userId)",
@@ -68,8 +64,6 @@ namespace AspNet.Identity.BLToolkit
             db.Parameter("@providerKey", login.ProviderKey),
             db.Parameter("@userId", user.Id))
                 .ExecuteNonQuery();
-
-            return user.Id;
         }
 
         /// <summary>

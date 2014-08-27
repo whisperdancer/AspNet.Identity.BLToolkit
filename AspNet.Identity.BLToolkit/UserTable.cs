@@ -30,8 +30,7 @@ namespace AspNet.Identity.BLToolkit
         /// <returns></returns>
         public string GetUserName(int userId)
         {
-            string un;
-            un = db
+            var un = db
                  .SetCommand(@"Select Name from AspNetUsers where Id=@userId",
                          db.Parameter("@userId", userId))
                  .ExecuteScalar<string>();
@@ -45,8 +44,7 @@ namespace AspNet.Identity.BLToolkit
         /// <returns></returns>
         public int GetUserId(string userName)
         {
-            int uid;
-            uid = db
+            var uid = db
                  .SetCommand(@"Select Id from AspNetUsers where UserName=@userName",
                          db.Parameter("@userName", userName))
                  .ExecuteScalar<int>();
@@ -146,7 +144,7 @@ namespace AspNet.Identity.BLToolkit
         /// <param name="userId"></param>
         /// <param name="passwordHash"></param>
         /// <returns></returns>
-        public int SetPasswordHash(int userId, string passwordHash)
+        public void SetPasswordHash(int userId, string passwordHash)
         {
             db
              .SetCommand(@"
@@ -159,8 +157,6 @@ namespace AspNet.Identity.BLToolkit
                  db.Parameter("@pwdHash", passwordHash),
                  db.Parameter("@Id", userId))
              .ExecuteNonQuery();
-
-            return userId;
         }
 
         /// <summary>
@@ -183,9 +179,9 @@ namespace AspNet.Identity.BLToolkit
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public int Insert(TUser user)
+        public void Insert(TUser user)
         {
-            var _id = db
+            var id = db
                     .SetCommand(@"
                             Insert into AspNetUsers
                                 (UserName,  PasswordHash, SecurityStamp,Email,EmailConfirmed,PhoneNumber,PhoneNumberConfirmed, AccessFailedCount,LockoutEnabled,LockoutEndDateUtc,TwoFactorEnabled)
@@ -204,8 +200,7 @@ namespace AspNet.Identity.BLToolkit
             db.Parameter("@twofactorenabled", user.TwoFactorEnabled))
             .ExecuteScalar<int>();
 
-            user.Id = _id; // set userid
-            return _id;
+            user.Id = id; // set userid
         }
 
         /// <summary>
@@ -213,14 +208,12 @@ namespace AspNet.Identity.BLToolkit
         /// </summary>
         /// <param name="userId">The user's id</param>
         /// <returns></returns>
-        private int Delete(int userId)
+        private void Delete(int userId)
         {
             db
                 .SetCommand(@"Delete from AspNetUsers where Id = @id",
                     db.Parameter("@id", userId))
                 .ExecuteNonQuery();
-
-            return userId;
         }
 
         /// <summary>
@@ -228,9 +221,9 @@ namespace AspNet.Identity.BLToolkit
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public int Delete(TUser user)
+        public void Delete(TUser user)
         {
-            return Delete(user.Id);
+            Delete(user.Id);
         }
 
         /// <summary>
@@ -238,7 +231,7 @@ namespace AspNet.Identity.BLToolkit
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public int Update(TUser user)
+        public void Update(TUser user)
         {
             db
               .SetCommand(@"
@@ -260,8 +253,6 @@ namespace AspNet.Identity.BLToolkit
                 db.Parameter("@twofactorenabled", user.TwoFactorEnabled)
            )
            .ExecuteNonQuery();
-
-            return user.Id;
         }
     }
 }

@@ -47,14 +47,12 @@ namespace AspNet.Identity.BLToolkit
         /// </summary>
         /// <param name="userId">The user's id</param>
         /// <returns></returns>
-        public int Delete(int userId)
+        public void Delete(int userId)
         {
             db
                 .SetCommand(@"Delete from AspNetUserRoles where Id = @id",
                     db.Parameter("@id", userId))
                 .ExecuteNonQuery();
-
-            return userId;
         }
 
         /// <summary>
@@ -63,15 +61,13 @@ namespace AspNet.Identity.BLToolkit
         /// <param name="user">The User</param>
         /// <param name="roleId">The Role's id</param>
         /// <returns></returns>
-        public int Insert(IdentityUser user, int roleId)
+        public void Insert(IdentityUser user, int roleId)
         {
             db
                 .SetCommand(@"Insert into AspNetUserRoles (UserId, RoleId) values (@userId, @roleId)",
                     db.Parameter("@userId", user.Id),
                     db.Parameter("@roleId", roleId))
                 .ExecuteNonQuery();
-
-            return roleId;
         }
     }
 }
