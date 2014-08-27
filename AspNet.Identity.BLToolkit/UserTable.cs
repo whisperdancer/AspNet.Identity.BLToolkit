@@ -62,24 +62,24 @@ namespace AspNet.Identity.BLToolkit
             db.SetCommand(@"Select * from AspNetUsers where Id=@userId",
                 db.Parameter("@userId", userId));
 
-            using (IDataReader rd = db.ExecuteReader())
+            var dt = db.ExecuteDataTable();
+            if(dt != null && dt.Rows.Count == 1)
             {
-                while (rd.Read())
-                {
-                    user = (TUser)Activator.CreateInstance(typeof(TUser));
-                    user.Id = Int32.Parse(rd["Id"].ToString());
-                    user.UserName = rd["UserName"].ToString();
-                    user.PasswordHash = string.IsNullOrEmpty(rd["PasswordHash"].ToString()) ? null : rd["PasswordHash"].ToString();
-                    user.SecurityStamp = string.IsNullOrEmpty(rd["SecurityStamp"].ToString()) ? null : rd["SecurityStamp"].ToString();
-                    user.Email = string.IsNullOrEmpty(rd["Email"].ToString()) ? null : rd["Email"].ToString();
-                    user.EmailConfirmed = rd["EmailConfirmed"].ToString() == "1" ? true : false;
-                    user.PhoneNumber = string.IsNullOrEmpty(rd["PhoneNumber"].ToString()) ? null : rd["PhoneNumber"].ToString();
-                    user.PhoneNumberConfirmed = rd["PhoneNumberConfirmed"].ToString() == "1" ? true : false;
-                    user.LockoutEnabled = rd["LockoutEnabled"].ToString() == "1" ? true : false;
-                    user.LockoutEndDateUtc = string.IsNullOrEmpty(rd["LockoutEndDateUtc"].ToString()) ? DateTime.Now : DateTime.Parse(rd["LockoutEndDateUtc"].ToString());
-                    user.AccessFailedCount = string.IsNullOrEmpty(rd["AccessFailedCount"].ToString()) ? 0 : int.Parse(rd["AccessFailedCount"].ToString());
-                }
+                var row = dt.Rows[0];
+                user = (TUser)Activator.CreateInstance(typeof(TUser));
+                user.Id = Int32.Parse(row["Id"].ToString());
+                user.UserName = row["UserName"].ToString();
+                user.PasswordHash = string.IsNullOrEmpty(row["PasswordHash"].ToString()) ? null : row["PasswordHash"].ToString();
+                user.SecurityStamp = string.IsNullOrEmpty(row["SecurityStamp"].ToString()) ? null : row["SecurityStamp"].ToString();
+                user.Email = string.IsNullOrEmpty(row["Email"].ToString()) ? null : row["Email"].ToString();
+                user.EmailConfirmed = row["EmailConfirmed"].ToString() == "1" ? true : false;
+                user.PhoneNumber = string.IsNullOrEmpty(row["PhoneNumber"].ToString()) ? null : row["PhoneNumber"].ToString();
+                user.PhoneNumberConfirmed = row["PhoneNumberConfirmed"].ToString() == "1" ? true : false;
+                user.LockoutEnabled = row["LockoutEnabled"].ToString() == "1" ? true : false;
+                user.LockoutEndDateUtc = string.IsNullOrEmpty(row["LockoutEndDateUtc"].ToString()) ? DateTime.Now : DateTime.Parse(row["LockoutEndDateUtc"].ToString());
+                user.AccessFailedCount = string.IsNullOrEmpty(row["AccessFailedCount"].ToString()) ? 0 : int.Parse(row["AccessFailedCount"].ToString());
             }
+
             return user;
         }
 
