@@ -23,6 +23,7 @@ Then many of the classed in the web app will need to be modified to work with th
 The scripts for the database are included in the database1 project and can be used to recreate the database for your project. 
 References:
 http://www.asp.net/identity/overview/extensibility/implementing-a-custom-mysql-aspnet-identity-storage-provider
+
 http://www.asp.net/identity/overview/extensibility/change-primary-key-for-users-in-aspnet-identity
 
 
