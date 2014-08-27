@@ -13,7 +13,7 @@ namespace AspNet.Identity.BLToolkit
         private DbManager db;
 
         /// <summary>
-        /// Constructor that takes a MySQLDatabase instance 
+        /// Constructor that takes a DbManager instance 
         /// </summary>
         /// <param name="database"></param>
         public RoleTable(DbManager database)
@@ -46,7 +46,6 @@ namespace AspNet.Identity.BLToolkit
             var id = db
                 .SetCommand(@"Insert into AspNetRoles (Name) values (@name)
                     SELECT Cast(SCOPE_IDENTITY() as int)",
-                    db.Parameter("@id", role.Id),
                     db.Parameter("@name", role.Name))
                 .ExecuteScalar<int>();
 

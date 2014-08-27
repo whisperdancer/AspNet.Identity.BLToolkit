@@ -14,7 +14,7 @@ namespace AspNet.Identity.BLToolkit
         private DbManager db;
 
         /// <summary>
-        /// Constructor that takes a MySQLDatabase instance 
+        /// Constructor that takes a DbManager instance 
         /// </summary>
         /// <param name="database"></param>
         public UserRolesTable(DbManager database)
@@ -67,8 +67,8 @@ namespace AspNet.Identity.BLToolkit
         {
             db
                 .SetCommand(@"Insert into AspNetUserRoles (UserId, RoleId) values (@userId, @roleId)",
-                    db.Parameter("@id", user.Id),
-                    db.Parameter("@name", roleId))
+                    db.Parameter("@userId", user.Id),
+                    db.Parameter("@roleId", roleId))
                 .ExecuteNonQuery();
 
             return roleId;

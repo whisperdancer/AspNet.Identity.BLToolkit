@@ -15,7 +15,7 @@ namespace AspNet.Identity.BLToolkit
         private DbManager db;
 
         /// <summary>
-        /// Constructor that takes a MySQLDatabase instance 
+        /// Constructor that takes a DbManager instance 
         /// </summary>
         /// <param name="database"></param>
         public UserTable(DbManager database)

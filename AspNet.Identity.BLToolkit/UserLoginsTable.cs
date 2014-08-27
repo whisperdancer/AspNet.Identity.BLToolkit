@@ -13,7 +13,7 @@ namespace AspNet.Identity.BLToolkit
         private DbManager db;
 
         /// <summary>
-        /// Constructor that takes a MySQLDatabase instance 
+        /// Constructor that takes a DbManager instance 
         /// </summary>
         /// <param name="database"></param>
         public UserLoginsTable(DbManager database)
@@ -31,9 +31,9 @@ namespace AspNet.Identity.BLToolkit
         {
             db
                 .SetCommand(@"Delete from AspNetUserLogins where UserId = @userId and LoginProvider = @loginProvider and ProviderKey = @providerKey",
-                db.Parameter("UserId", user.Id),
-                db.Parameter("loginProvider", login.LoginProvider),
-                db.Parameter("providerKey", login.ProviderKey))
+                db.Parameter("@userId", user.Id),
+                db.Parameter("@loginProvider", login.LoginProvider),
+                db.Parameter("@providerKey", login.ProviderKey))
                 .ExecuteNonQuery();
 
             return user.Id;
@@ -64,9 +64,9 @@ namespace AspNet.Identity.BLToolkit
         {
             db
                 .SetCommand(@"Insert into AspNetUserLogins (LoginProvider, ProviderKey, UserId) values (@loginProvider, @providerKey, @userId)",
-            db.Parameter("loginProvider", login.LoginProvider),
-            db.Parameter("providerKey", login.ProviderKey),
-            db.Parameter("userId", user.Id))
+            db.Parameter("@loginProvider", login.LoginProvider),
+            db.Parameter("@providerKey", login.ProviderKey),
+            db.Parameter("@userId", user.Id))
                 .ExecuteNonQuery();
 
             return user.Id;
@@ -82,8 +82,8 @@ namespace AspNet.Identity.BLToolkit
             int id;
             id = db
                  .SetCommand(@"Select UserId from AspNetUserLogins where LoginProvider = @loginProvider and ProviderKey = @providerKey",
-                         db.Parameter("loginProvider", userLogin.LoginProvider),
-                         db.Parameter("providerKey", userLogin.ProviderKey))
+                         db.Parameter("@loginProvider", userLogin.LoginProvider),
+                         db.Parameter("@providerKey", userLogin.ProviderKey))
                  .ExecuteScalar<int>();
             return id;
         }

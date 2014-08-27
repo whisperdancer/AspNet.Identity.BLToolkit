@@ -8,7 +8,7 @@ using System.Security.Claims;
 namespace AspNet.Identity.BLToolkit
 {
     /// <summary>
-    /// Class that represents the UserClaims table in the MySQL Database
+    /// Class that represents the UserClaims table in the Database
     /// </summary>
     public class UserClaimsTable
     {
@@ -71,9 +71,9 @@ namespace AspNet.Identity.BLToolkit
         {
             db
                 .SetCommand(@"Insert into AspNetUserClaims (ClaimValue, ClaimType, UserId) values (@value, @type, @userId)",
-                    db.Parameter("value", userClaim.Value),
-                    db.Parameter("type", userClaim.Type),
-                    db.Parameter("userId", userId))
+                    db.Parameter("@value", userClaim.Value),
+                    db.Parameter("@type", userClaim.Type),
+                    db.Parameter("@userId", userId))
                 .ExecuteNonQuery();
 
             return userId;
@@ -89,9 +89,9 @@ namespace AspNet.Identity.BLToolkit
         {
             db
                 .SetCommand(@"Delete from AspNetUserClaims where UserId = @userId and @ClaimValue = @value and ClaimType = @type",
-                    db.Parameter("userId", user.Id),
-                    db.Parameter("value", claim.Value),
-                    db.Parameter("type", claim.Type))
+                    db.Parameter("@userId", user.Id),
+                    db.Parameter("@value", claim.Value),
+                    db.Parameter("@type", claim.Type))
                 .ExecuteNonQuery();
 
             return user.Id;
