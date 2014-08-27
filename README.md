@@ -6,7 +6,7 @@ This implementation uses MsSql server. However, BLToolkit has providers for othe
 
 Notes:
 
-Set your conn string in globals.cs. Pulling this from web.config would be a better way. A small modification to the code can accomplish this. Now its a static variable. Just change it to use appsettings.
+Set your conn string in globals.cs. Pulling this from web.config would be a better way. A small modification to the code can accomplish this. 
 
 The default database that comes with VS 2013 templates uses Entity Framework and the database has a string key for the AspNetUsers table. Identity 2.0 allows for the ability to use any key type. This implemtation uses an int key type.
 
