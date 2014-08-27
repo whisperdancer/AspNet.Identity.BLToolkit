@@ -12,7 +12,6 @@ namespace AspNet.Identity.BLToolkit
     public class UserTable<TUser>
         where TUser : IdentityUser
     {
-        private string _conn = Globals.ConnString;
         private DbManager db;
 
         /// <summary>

@@ -10,8 +10,6 @@ namespace AspNet.Identity.BLToolkit
     /// </summary>
     public class UserLoginsTable
     {
-        private string _conn = Globals.ConnString;
-
         private DbManager db;
 
         /// <summary>

@@ -12,7 +12,6 @@ namespace AspNet.Identity.BLToolkit
     /// </summary>
     public class UserClaimsTable
     {
-        private string _conn = Globals.ConnString;
         private DbManager db;
 
         /// <summary>

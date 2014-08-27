@@ -10,7 +10,6 @@ namespace AspNet.Identity.BLToolkit
     /// </summary>
     public class RoleTable
     {
-        private string _conn = Globals.ConnString;
         private DbManager db;
 
         /// <summary>
