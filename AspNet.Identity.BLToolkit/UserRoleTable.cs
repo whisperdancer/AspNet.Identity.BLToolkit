@@ -50,8 +50,8 @@ namespace AspNet.Identity.BLToolkit
         public void Delete(int userId)
         {
             db
-                .SetCommand(@"Delete from AspNetUserRoles where Id = @id",
-                    db.Parameter("@id", userId))
+                .SetCommand(@"Delete from AspNetUserRoles where Id = @userId",
+                    db.Parameter("@userId", userId))
                 .ExecuteNonQuery();
         }
 
